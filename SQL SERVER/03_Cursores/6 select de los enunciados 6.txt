@@ -1,0 +1,8 @@
+-- DECLARO EL CURSOR
+DECLARE MI_CURSOR_CLIENTE_PRODUCTO_PEDIDO_IMPORTE CURSOR FOR
+SELECT C.nomcliente, P.nombreproducto, PC.idpedido, PD.cantidad*PD.preciounidad 
+FROM venta.clientes c 
+INNER JOIN venta.pedidoscabe PC ON C.idcliente=PC.idcliente
+INNER JOIN  PEDIDOSDETA PD ON PC.idpedido=PD.idpedido 
+INNER JOIN COMPRAS.productos P ON PD.idproducto=P.idproducto
+ORDER BY  C.nomcliente, P.nombreproducto,PC.idpedido

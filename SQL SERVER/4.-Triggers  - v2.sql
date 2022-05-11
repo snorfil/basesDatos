@@ -1,0 +1,18 @@
+/* 4 Al insertar pago, comprobar que no supera el total del pedido*/
+-- o con joins
+CREATE TRIGGER TX_COMPROBAR_IMPORTE_PEDIDO_MAYOR_RESTO_DE_PAGOS
+ON PAGOS
+FOR INSERT
+AS 
+IF (SELECT SUM(P.imppagado) FROM pagos P, inserted I 
+WHERE P.idpedido = I.idpedido) >
+(SELECT SUM(PD.PRECIOUNIDAD*PD.CANTIDAD) FROM pedidosdeta
+ PD INNER JOIN inserted I ON I.idpedido = PD.idpedido)
+BEGIN
+PRINT 'EL IMPORTE A INGRESAR SUPERA EL IMPORTE DEL PEDIDO.' 
+ROLLBACK TRANSACTION
+END
+ELSE
+BEGIN
+PRINT 'EL IMPORTE HA SIDO INGRESADO.'
+END

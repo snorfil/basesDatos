@@ -1,7 +1,0 @@
-SELECT 
-pr.nomproveedor,
-p.nomproducto,
-p.preciounidad
-FROM  compra.productos p 
-join dbo.proveedores pr ON pr.idproveedor=p.idproveedor 
-ORDER BY 1,2
